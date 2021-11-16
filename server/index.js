@@ -5,6 +5,9 @@ const registerMessageHandlers = require("./messageHandlers");
 
 const httpServer = http.createServer();
 
+/* Socket.IO Initialization
+Since server and client are at different location I have to se the cors option
+*/
 const io = new Server(httpServer, {
   cors: {
     origin: "http://localhost:3000",
@@ -16,6 +19,7 @@ const onConnection = (socket) => {
   registerMessageHandlers(io, socket);
 };
 
+//Socket.io middleware. Checks if there is actually a username
 io.use((socket, next) => {
   const username = socket.handshake.auth.username;
   if (!username) {

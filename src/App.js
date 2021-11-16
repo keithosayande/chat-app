@@ -6,6 +6,9 @@ import socket from "./socket";
 function App() {
   const [connectedSocket, setConnectedSocket] = React.useState(null);
   const login = (username) => {
+    /* Use chosen username as part websocket handshake
+      
+    */
     socket.auth = { username };
     setConnectedSocket(socket.connect());
   };

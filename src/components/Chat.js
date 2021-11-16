@@ -12,6 +12,7 @@ function Chat({ socket }) {
     user.hasNewMessages = false;
   };
 
+  //Sends Message
   const onMessage = (message) => {
     if (selectedUser) {
       socket.emit("message:post", {
@@ -30,6 +31,7 @@ function Chat({ socket }) {
   };
 
   React.useEffect(() => {
+    //Initial Connection 
     socket.on("connect", () => {
       setUsers(
         users.map((user, index) => {
@@ -46,6 +48,7 @@ function Chat({ socket }) {
       );
     });
 
+    //Handles the user:list event from the server 
     socket.on("user:list", (users) => {
       const initialUsers = users.map((user, index) => {
         return {
@@ -83,6 +86,7 @@ function Chat({ socket }) {
       );
     });
 
+    //The correct users get their messages
     socket.on("message:post", ({ message, from }) => {
       setUsers(
         users.map((user, index) => {
